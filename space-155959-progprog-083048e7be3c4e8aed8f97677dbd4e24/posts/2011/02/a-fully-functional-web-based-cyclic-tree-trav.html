@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<link href='../../../exports.css' rel='stylesheet'>
+<link href='../../../exports.css' rel='stylesheet'>
+
+</head>
+<body>
+<div id='wrap'>
+<div id='header'>
+<h1>programmable programmer</h1>
+<h2>This is an archived post
+This is an archived post
+</h2>
+</div>
+<div id='content'><div id='nav'>
+<a href="../../../posts/2011/03/some-updates.html">Previous</a>
+&nbsp; 
+<a href="../../../index.html">Index</a>
+&nbsp; 
+<a href="../../../posts/2011/01/41478363.html">Next</a>
+</div>
+<div class='post'>
+<div class='post_header'>
+<h3>A web-based teaching application </h3>
+<div class='post_info'>
+<span class='post_time'>February  1 2011,  4:17 PM</span>
+<span class='author'>&nbsp;by alok thapa</span>
+</div>
+</div>
+<div class='post_body'><p><br />I was inspired by the way "The Little Schemer" was used to teach scheme, with question on the left and answers on the right.&nbsp;I wondered how hard it would be to build a web app that could teach you in such an interactive way. Not so hard as I later found out, it needed<strong> less than 70 lines</strong> of code to build a prototype. Not only is the code small, but all you need to do is create a "nodes" datatype to create your own custom book!&nbsp;</p>
+<p>The application first starts with a list of nodes. Each node contains a question to ask and possible responses. Each response can either do nothing (i.e. you move on to the next node in the list), jump you to another named node or have their own child nodes that only they can visit. Each node may or may not have a label, so we can only use them when we need to jump.&nbsp;</p>
+<p>Here's a small example that tries to teach you French.</p>
+<p><p><a href="https://gist.github.com/806971">https://gist.github.com/806971</a></p></p>
+<p>Output:</p>
+<p>This is the first page after you run the application. It shows the question of the first node. Since its response does not contain any action, it simply creates a link to the next node.&nbsp;</p>
+<p><div class='p_embed p_image_embed'>
+<img src='../../../image/2011/02/20904297-first.png'>
+</div>
+&nbsp;</p>
+<p>This page for the second node. There are two possible responses, either you say "I don't care" which takes you back to the "home" node while clicking on "you're welcome" takes you to the next node.&nbsp;</p>
+<p>&nbsp;</p>
+<p><div class='p_embed p_image_embed'>
+<img src='../../../image/2011/02/20904392-second.png'>
+</div>
+</p>
+<p>&nbsp;</p>
+<p>Let's skip the next node as it only has one response. Now the fourth node contains two responses each of which sends you to a different node.</p>
+<p><div class='p_embed p_image_embed'>
+<img src='../../../image/2011/02/20904424-four.png'>
+</div>
+</p>
+<p>If you click on "umm I don't know..." , you get to this page.</p>
+<p><div class='p_embed p_image_embed'>
+<img src='../../../image/2011/02/20904431-fifth-one.png'>
+</div>
+</p>
+<p>&nbsp;</p>
+<p>and if you click on "I guess it means good" link, you get to this page.&nbsp;</p>
+<p><div class='p_embed p_image_embed'>
+<img src='../../../image/2011/02/20904447-fifth-two.png'>
+</div>
+</p>
+<p>&nbsp;</p>
+<p>Since, none of the responses above do anything more clicking any of the two link above takes you to the page for the next node.&nbsp;</p>
+<p>&nbsp;</p>
+<p>Enjoy.</p>
+<p>&nbsp;</p></div>
+<div class='post_tags'>
+<h4>Tags</h4>
+<div class='post_tags_list'>scheme, web</div>
+</div>
+<div class='post_responses'>
+<h4>1650 views and 5 responses</h4>
+<ul class='post_responses list'>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Feb  2 2011, 10:55 AM</div>
+<div class='response_name'>Alan Post responded:</div>
+</div>
+<div class='response_body'>Are you planning on developing this further?  I need a framework like this for a project I'm currently working on.  I'd be happy to coordinate if you're in the same situation.</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Feb  2 2011,  1:19 PM</div>
+<div class='response_name'>Himanshu responded:</div>
+</div>
+<div class='response_body'>Dude this could be an excellent project! I really like the Little Schemer teaching methodology myself!!</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Feb  2 2011,  1:36 PM</div>
+<div class='response_name'>alok thapa responded:</div>
+</div>
+<div class='response_body'>@alan Sure, I'm just doing this in my free time and maybe put up a more complete version on github soon. <p>@himanshuc sure, let's do something!</p></div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Feb  2 2011,  2:04 PM</div>
+<div class='response_name'>Alan Post responded:</div>
+</div>
+<div class='response_body'>@alok: github would be fantastic.  I would like to request we use the ISC license for this work, as it is compatible with other software I'm developing.<p>I work on chicken scheme, but have a fairly good idea of how to separate implementation specific code from more general scheme code.  I think we'd be able to work from different scheme implementations.</p><p>What do you think?</p></div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Feb  4 2011,  6:00 PM</div>
+<div class='response_name'>alok thapa responded:</div>
+</div>
+<div class='response_body'>@alan I've just uploaded it as a github project, you can find it here -> github.com/alokthapa/teach</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<item>
+	<title>C# Expressions</title>
+	<link>http://progprog.posterous.com/2008/08/09/one-of-the-cooler-features-of-c-30</link>
+	<pubDate>Sat Aug 09 18:24:23 -0700 2008</pubDate>
+	
+	<dc:creator><![CDATA[alok thapa]]></dc:creator>
+	
+	
+		<category domain="tag" nicename="c-sharp"><![CDATA[c-sharp]]></category>
+	
+
+	<category><![CDATA[Uncategorized]]></category>
+
+	<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
+
+  <guid isPermaLink="false">http://progprog.posterous.com/2008/08/09/one-of-the-cooler-features-of-c-30</guid>
+	<description></description>
+	<content:encoded><![CDATA[One of the cooler features of c# 3.0 are expression trees. A quick intro can be found here .
+
+Now the fact that you can compile a function at runtime means that you can build a dynamic language on top of Linq Expressions.
+
+Here's a simple dynamic "XML Language" written using Expression Trees.
+
+Basically, the idea here is to have a one-to-one mapping between your XML expression and the Linq EXpressions themselves.
+
+For example,
+&nbsp;
+
+<code> </code><code style="font-size: 12px;">&lt;Expression FunctionName="Constant" Type="System.String" Value="someval" /&gt;
+</code>
+would create an Linq Expression of type
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;">Expression.Constant("someval",Type.GetType(string));
+
+</code>&nbsp;</blockquote>
+Here's a related test for the mapping:
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;">[TestMethod]
+public void GetConstantTest()
+{
+XMLExpressionProvider expr = new XMLExpressionProvider();
+XElement elem = expr.BuildConstant(typeof(int).ToString(), "1");
+Assert.AreEqual("1", expr.GetConstant(elem));
+}
+
+</code>&nbsp;</blockquote>
+and related implementations:
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;">public XElement BuildConstant(string type, string value)
+{
+XElement elem = new XElement("Expression");
+elem.Add(new XAttribute("FunctionName", "Constant"));
+elem.Add(new XAttribute("Type", type));
+elem.Add(new XAttribute("Value", value));
+
+return elem;
+}
+
+</code><code style="font-size: 12px;"> public object GetConstant(XElement elem)
+{
+return elem.Attribute("Value").Value;
+}
+</code>
+</blockquote>
+Binary operations can also be mapped similarly.
+
+Here we're creating a new Add Expression with the constants 1 and 2. This actually creates a xml representation for the Add Operation.
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;"> </code><code style="font-size: 12px;"> [TestMethod]
+public void BuildExpressionTest()
+{
+XMLExpressionProvider expr = new XMLExpressionProvider();
+XElement xelm = expr.BuildExpression("Add", new[] {
+expr.BuildConstant(typeof(int).ToString(),"1"),
+expr.BuildConstant(typeof(int).ToString(),"2")});
+Assert.AreEqual(xelm.ToString(SaveOptions.DisableFormatting),
+"&lt;Expression FunctionName=\"Add\"&gt;&lt;Expression FunctionName=\"Constant\" Type=\"System.Int32\" Value=\"1\" /&gt;&lt;Expression FunctionName=\"Constant\" Type=\"System.Int32\" Value=\"2\" /&gt;&lt;/Expression&gt;");
+}
+</code>
+</blockquote>
+Basically the XML Represenation would look like
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;"> </code><code style="font-size: 12px;"> &lt;Expression FunctionName="Add"&gt;
+&lt;Expression FunctionName="Constant" Type="System.Int32" Value="1" /&gt;
+&lt;Expression FunctionName="Constant" Type="System.Int32" Value="2" /&gt;
+&lt;/Expression&gt;
+</code>
+</blockquote>
+In the test below, we're actually creating a XML Representation for a GreaterThan expression and executing it with different parameters.
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;"> </code><code style="font-size: 12px;"> [TestMethod]
+public void ExpressionTest()
+{
+XMLExpressionProvider expr = new XMLExpressionProvider();
+ParameterExpression p = Expression.Parameter(typeof(int), "x");
+XElement elem = expr.BuildExpression("GreaterThan", new[] { expr.BuildConstant(typeof(int).ToString(), "5"), expr.BuildParameter(0) });
+Expression expression= expr.ExpressionFromXElement(elem, new [] {p});
+Expression&lt;Func&lt;int, bool&gt;&gt; e = Expression.Lambda&lt;Func&lt;int, bool&gt;&gt;(expression,new []{p});
+Console.WriteLine(e.ToString());
+Assert.IsTrue(e.Compile().Invoke(4));
+Assert.IsFalse(e.Compile().Invoke(7));
+}
+</code>
+</blockquote>
+The heart of the implementation lies in the method ExpressionFromXElement which is implemented as
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;">public Expression ExpressionFromXElement(XElement elem, ParameterExpression [] p)
+{
+
+if (IsExpression(elem))
+{
+
+switch (GetFunctionName(elem))
+{
+case "Or":
+return Expression.Or(ExpressionFromXElement(GetArguments(elem)[0], p), ExpressionFromXElement(GetArguments(elem)[1],p));
+case "And":
+return Expression.And(ExpressionFromXElement(GetArguments(elem)[0], p), ExpressionFromXElement(GetArguments(elem)[1], p));
+case "LessThan":
+return Expression.LessThan(ExpressionFromXElement(GetArguments(elem)[0], p), ExpressionFromXElement(GetArguments(elem)[1], p));
+case "GreaterThan":
+return Expression.GreaterThan(ExpressionFromXElement(GetArguments(elem)[0], p), ExpressionFromXElement(GetArguments(elem)[1], p));
+case "Equal":
+return Expression.Equal(ExpressionFromXElement(GetArguments(elem)[0], p), ExpressionFromXElement(GetArguments(elem)[1], p));
+case "Condition":
+return Expression.Condition(ExpressionFromXElement(GetArguments(elem)[0], p), ExpressionFromXElement(GetArguments(elem)[1], p), ExpressionFromXElement(GetArguments(elem)[2], p));
+case "Parameter":
+return p[Convert.ToInt32(elem.Attribute("Index").Value)];
+case "Constant":
+return Expression.Constant(((object)GetConstant(elem)),Type.GetType(elem.Attribute("Type").Value));
+case "Member":
+return Expression.PropertyOrField(ExpressionFromXElement(GetArguments(elem)[0], p), elem.Attribute("FieldName").Value);
+case "IsEmptyOrNull":
+return Expression.Or(
+Expression.Equal(ExpressionFromXElement(GetArguments(elem)[0], p), Expression.Constant(String.Empty)),
+Expression.Equal(ExpressionFromXElement(GetArguments(elem)[0], p), Expression.Constant(null)));
+default: throw new Exception();
+}
+}
+return null;
+}
+
+</code>&nbsp;</blockquote>
+You can also do member accesses:
+<blockquote>&nbsp;
+
+<code style="font-size: 12px;">[TestMethod]
+public void MemberAccessTest()
+{
+XMLExpressionProvider expr = new XMLExpressionProvider();
+ParameterExpression p = Expression.Parameter(typeof(string), "str");
+XElement elem = expr.BuildMemberExpr("Length", new []{expr.BuildParameter(0)});
+Expression expression = expr.ExpressionFromXElement(elem, new[] { p });
+var e = Expression.Lambda&lt;Func&lt;string, int&gt;&gt;(expression, new[] { p });
+Console.WriteLine(e.ToString());
+Assert.AreEqual(6, e.Compile().Invoke("string"));
+Assert.AreEqual(3, e.Compile().Invoke("str"));
+}
+
+</code><code style="font-size: 12px;"> [TestMethod]
+public void BuildMemberTest()
+{
+XMLExpressionProvider expr = new XMLExpressionProvider();
+Assert.AreEqual("&lt;Expression FunctionName=\"Member\" FieldName=\"MaxValue\"&gt;&lt;Expression FunctionName=\"Parameter\" Index=\"0\" /&gt;&lt;/Expression&gt;", expr.BuildMemberExpr("MaxValue", new []{expr.BuildParameter(0)} ).ToString(SaveOptions.DisableFormatting));
+}
+</code>
+</blockquote>
+The examples given here should give you an idea of how it works and the possiblities that exist.]]></content:encoded>
+	<excerpt:encoded><![CDATA[One of the cooler features of c# 3.0 are expression trees. A quick intro can be found here . Now the fact that you can compile a function at runtime means that you can build a dynamic language on top of Linq Expressions. Here's a simple dynamic "X...]]></excerpt:encoded>	
+
+	<wp:post_date>Sat Aug 09 18:24:23 -0700 2008</wp:post_date>
+	<wp:post_date_gmt>Sat Aug 09 18:24:23 -0700 2008</wp:post_date_gmt>
+	<wp:comment_status>open</wp:comment_status>
+	<wp:ping_status>open</wp:ping_status>
+	<wp:post_id>30289237</wp:post_id>
+	<wp:post_name>2008/08/09/one-of-the-cooler-features-of-c-30</wp:post_name>
+	<wp:status>publish</wp:status>
+	<wp:post_parent>0</wp:post_parent>
+	<wp:menu_order>0</wp:menu_order>
+	<wp:post_type>post</wp:post_type>
+	<wp:post_password></wp:post_password>
+	<wp:is_sticky>0</wp:is_sticky>
+
+	
+</item>

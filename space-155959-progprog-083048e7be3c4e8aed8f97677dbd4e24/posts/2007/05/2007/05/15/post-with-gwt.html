@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<link href='../../../exports.css' rel='stylesheet'>
+<link href='../../../exports.css' rel='stylesheet'>
+
+</head>
+<body>
+<div id='wrap'>
+<div id='header'>
+<h1>programmable programmer</h1>
+<h2>This is an archived post
+This is an archived post
+</h2>
+</div>
+<div id='content'><div id='nav'>
+<a href="../../../posts/2007/06/2007/06/27/factorial-in-lisp.html">Previous</a>
+&nbsp; 
+<a href="../../../index.html">Index</a>
+&nbsp; 
+<a href="../../../posts/2010/10/added-new-pages.html">Next</a>
+</div>
+<div class='post'>
+<div class='post_header'>
+<h3>Post With GWT</h3>
+<div class='post_info'>
+<span class='post_time'>May 15 2007,  5:23 PM</span>
+<span class='author'>&nbsp;by alok thapa</span>
+</div>
+</div>
+<div class='post_body'><p>This article is about integrating GWT with Grails. Here, GWT makes request to the Grails server which then returns a JSON object back to the GWT client.  Here's a way to do post using GWT</p>
+<p><p><a href="https://gist.github.com/621885">https://gist.github.com/621885</a></p></p>
+<p>By the way, its calling a controller of a grails project.  Here's how it handles it</p>
+<p>&nbsp;</p>
+<p><p><a href="https://gist.github.com/621887">https://gist.github.com/621887</a></p></p>
+<p>&nbsp;</p>
+<p>Edit:  Mary, you should be able to find that info somewhere on the web. Essentially, you create a RequestBuilder, send a request using <code><strong><a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/http/client/RequestBuilder.html#sendRequest%28java.lang.String,%20com.google.gwt.http.client.RequestCallback%29"></a></strong></code> <code><strong><a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/http/client/RequestBuilder.html#sendRequest%28java.lang.String,%20com.google.gwt.http.client.RequestCallback%29">sendRequest</a></strong>(java.lang.String&nbsp;requestData,             <a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/http/client/RequestCallback.html" title="interface in com.google.gwt.http.client">RequestCallback</a> callback)</code> callback should be a class that inherits RequestCallback interface. Now RequestCallback has a method  <code><strong><a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/http/client/RequestCallback.html#onResponseReceived%28com.google.gwt.http.client.Request,%20com.google.gwt.http.client.Response%29">onResponseReceived</a></strong>(<a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/http/client/Request.html" title="class in com.google.gwt.http.client">Request</a> request,                    <a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/http/client/Response.html" title="class in com.google.gwt.http.client">Response</a> response)</code> that you should implement, and Response has some methods like <code><strong><a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/http/client/Response.html#getText%28%29">getText</a></strong>()</code> that you can use.  Cheers</p></div>
+<div class='post_tags'>
+<h4>Tags</h4>
+<div class='post_tags_list'>grails, gwt</div>
+</div>
+<div class='post_responses'>
+<h4>50 views and 8 responses</h4>
+<ul class='post_responses list'>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Feb  6 2008, 10:40 AM</div>
+<div class='response_name'>louis responded:</div>
+</div>
+<div class='response_body'>very cool code, was looking for it for a long time...</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>May 19 2008,  3:04 PM</div>
+<div class='response_name'>Mary responded:</div>
+</div>
+<div class='response_body'>I'm starting on GWT, can you give other examples where you are using the way "RequestBuilder" for RPC in GWT</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Jul 10 2008,  8:40 AM</div>
+<div class='response_name'>And responded:</div>
+</div>
+<div class='response_body'>I was trying to send a POST request to "http://www.google.com/accounts/ClientLogin" but i get: "The URL<br /><a href="http://www.google.com/accounts/ClientLogin" rel="nofollow">http://www.google.com/accounts/ClientLogin</a> is invalid or violates the same-origin security restriction" (i get this for anything starting with http:// or localhost). How can i get pass this? is there NO WAY to send a request to server/servlet in another domain??</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Nov 27 2008,  4:22 PM</div>
+<div class='response_name'>Peregrino responded:</div>
+</div>
+<div class='response_body'>@And:<br />You're violating the Same Origin Policy (SOP), that's a restriction of GWT to prevent Cross Site Scripting (XSS) attacks, so that you can only request elements hosted on your same domain. <p>There are some ways to get around this which are documented in the GWT Docs. I recall reading about a technique called "JSON with Padding" or JSOP that allowed you to do something like what you're trying to do ;)</p><p>Hope this helps in any way.</p></div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>May  3 2009, 10:13 PM</div>
+<div class='response_name'>joe responded:</div>
+</div>
+<div class='response_body'>@And:<br />You need to add a doPost() to your servlet.</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Sep 10 2009,  3:53 PM</div>
+<div class='response_name'>TonyKayrouz responded:</div>
+</div>
+<div class='response_body'>I was trying to send a Get request to “http://www.google.com/accounts/ClientLogin” but i get: “The URL<br /><a href="http://www.google.com/accounts/ClientLogin" rel="nofollow">http://www.google.com/accounts/ClientLogin</a> is invalid or violates the same-origin security restriction” (i get this for anything starting with http:// or localhost). How can i get pass this? is there NO WAY to send a request to server/servlet in another domain??"</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Dec 28 2009,  1:07 PM</div>
+<div class='response_name'>Fabio responded:</div>
+</div>
+<div class='response_body'>Interesting... Json P works well but.. I am calling MY REST services. I wanna make POST,PUT,DELETE requests, too.<br />How can I do? <br />getJson() on the gwt docs is great but what about for other crud operations?</div>
+</li>
+<li class='response clearfix'>
+<div class='response_header'>
+<div class='response_time'>Jul 27 2010, 10:45 PM</div>
+<div class='response_name'>Sven Tiffe responded:</div>
+</div>
+<div class='response_body'>I use native JS code to open a web page in a new browser window and to pass information by POST. The implementation has been derived from another example found on the web and is explained here: <a href="http://ililiililililii.blog.de/2010/06/20/generating-tag-clouds-in-wordle-with-gwt-and-post-8837637/" rel="nofollow">http://ililiililililii.blog.de/2010/06/20/generating-tag-clouds-in-wordle-wit...</a><p>As I need to open and display the page which is called by the POST, I did not use the RequestBuilder. Do you know alternatives to my approach?</p><p>Thx</p></div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

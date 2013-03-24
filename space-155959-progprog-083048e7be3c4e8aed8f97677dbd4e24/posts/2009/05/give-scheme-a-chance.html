@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<link href='../../../exports.css' rel='stylesheet'>
+<link href='../../../exports.css' rel='stylesheet'>
+
+</head>
+<body>
+<div id='wrap'>
+<div id='header'>
+<h1>programmable programmer</h1>
+<h2>This is an archived post
+This is an archived post
+</h2>
+</div>
+<div id='content'><div id='nav'>
+<a href="../../../posts/2010/10/checking-out-postly.html">Previous</a>
+&nbsp; 
+<a href="../../../index.html">Index</a>
+&nbsp; 
+<a href="../../../posts/2009/05/too-many-links-spoil-the-blog.html">Next</a>
+</div>
+<div class='post'>
+<div class='post_header'>
+<h3>Give Scheme a chance</h3>
+<div class='post_info'>
+<span class='post_time'>May  6 2009,  3:50 AM</span>
+<span class='author'>&nbsp;by alok thapa</span>
+</div>
+</div>
+<div class='post_body'><div>Scheme provides a unique implementation of web server, one that gives you a powerful abstraction and lets you work on web applications as if you're working on simple functions.&nbsp;</div>
+<div>Lets start with a simple example. Lets say you have a simple program that calculates the sum of two numbers which you receive from your user.&nbsp;</div>
+<div>A simple Scheme program for this would be as follows:</div>
+<p>&nbsp;(define (get-number)</p>
+<p>&nbsp;&nbsp;(read))</p>
+<p>&nbsp;</p>
+<p>(define (sum-of-two)</p>
+<p>&nbsp;(+ (get-number) (get-number)))</p>
+<div>Even if you've never seen a Scheme program before, you should be able to easily figure out that <strong>get-number</strong> gets the user input using the built-in read method and <strong>sum-of-two</strong> just adds two user inputs. Implementations on other languages would also be pretty slmple.&nbsp;</div>
+<div>Now, suppose you want to get the same input of two numbers through a web form. You can still keep the <strong>sum-of-two</strong> function but how would you implement <strong>get-number</strong>? Because HTTP is stateless, a typical implementation would be to first &nbsp;get the first number, store it somewhere, go back and grab another number and then calculate the sum and display the result. But Scheme lets you do this in a completely unique way, as if you're just calling a function and getting its result.</div>
+<div>Here's one implementation for it:</div>
+<div>#lang web-server/insta</div>
+<div>(require web-server/servlet)</div>
+<div>(require web-server/servlet/servlet-structs)</div>
+<div>(require web-server/servlet/web)</div>
+<div>(require web-server/http/bindings)</div>
+<div>(define sb</div>
+<div>&nbsp;&nbsp;(lambda ()</div>
+<div>&nbsp;&nbsp; &nbsp;(send/back</div>
+<div>&nbsp;&nbsp; &nbsp; `(html&nbsp;</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; (body</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;(h1 "the sum is "</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;,(number-&gt;string (+ (get-number) (get-number)))))))))</div>
+<div>(define (<strong>get-number</strong>)&nbsp;</div>
+<div>&nbsp;&nbsp;(string-&gt;number&nbsp;</div>
+<div>&nbsp;&nbsp; (extract-binding/single 'number</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (request-bindings</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(send/suspend</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (lambda (k-url)</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; `(html (head (title "enter a number"))</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(body</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (form ((action ,k-url))</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "enter a num"</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (input ((name "number")))</div>
+<div>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (input ((type "submit"))))))))))))</div>
+<p />
+<div>(define (start request)</div>
+<div>&nbsp;&nbsp;(sb))</div>
+<div>
+<div><strong><span style="font-weight: normal;">If you have latest PLT Scheme installed, just run this in Dr. Scheme and a web page will first prompt you for the first number, and then the second and then display the result on a different page.&nbsp;</span></strong></div>
+<div>For the moment, just concentrate on the&nbsp;<strong>get-number</strong>&nbsp;function here and ignore everything else. This function creates a web form which prompts the user for a number and returns the value. The&nbsp;<strong>very important</strong>&nbsp;thing to get here is it acts just like a regular function. This provides you with a <strong>very high level of abstraction</strong> and lets you concentrate on functions that return values instead of creating web forms and worrying about web page cycles. Also, notice you don't need to store the numbers as temporary variables anywhere.</div>
+<div>Impressed??&nbsp;There's much more you can do with Scheme these days, so head on over the PLT Scheme documentation and check out the information on web servers. Also, check out LeftParen, a Scheme web app framework.</div>
+<p />
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div>
+<div class='post_tags'>
+<h4>Tags</h4>
+<div class='post_tags_list'>scheme</div>
+</div>
+<div class='post_responses'>
+<h4>2724 views and 0 responses</h4>
+<ul class='post_responses list'>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

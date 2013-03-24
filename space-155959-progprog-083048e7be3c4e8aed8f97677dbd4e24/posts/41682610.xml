@@ -1,0 +1,147 @@
+<item>
+	<title>A web-based teaching application </title>
+	<link>http://progprog.posterous.com/a-fully-functional-web-based-cyclic-tree-trav</link>
+	<pubDate>Tue Feb 01 16:17:56 -0800 2011</pubDate>
+	
+	<dc:creator><![CDATA[alok thapa]]></dc:creator>
+	
+	
+		<category domain="tag" nicename="scheme"><![CDATA[scheme]]></category>
+	
+		<category domain="tag" nicename="web"><![CDATA[web]]></category>
+	
+
+	<category><![CDATA[Uncategorized]]></category>
+
+	<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
+
+  <guid isPermaLink="false">http://progprog.posterous.com/a-fully-functional-web-based-cyclic-tree-trav</guid>
+	<description></description>
+	<content:encoded><![CDATA[<p><br />I was inspired by the way "The Little Schemer" was used to teach scheme, with question on the left and answers on the right.&nbsp;I wondered how hard it would be to build a web app that could teach you in such an interactive way. Not so hard as I later found out, it needed<strong> less than 70 lines</strong> of code to build a prototype. Not only is the code small, but all you need to do is create a "nodes" datatype to create your own custom book!&nbsp;</p>
+<p>The application first starts with a list of nodes. Each node contains a question to ask and possible responses. Each response can either do nothing (i.e. you move on to the next node in the list), jump you to another named node or have their own child nodes that only they can visit. Each node may or may not have a label, so we can only use them when we need to jump.&nbsp;</p>
+<p>Here's a small example that tries to teach you French.</p>
+<p><p><a href="https://gist.github.com/806971">https://gist.github.com/806971</a></p></p>
+<p>Output:</p>
+<p>This is the first page after you run the application. It shows the question of the first node. Since its response does not contain any action, it simply creates a link to the next node.&nbsp;</p>
+<p><div class='p_embed p_image_embed'>
+<a href="http://getfile1.posterous.com/getfile/files.posterous.com/temp-2011-02-01/AAylHapBAcuthqhvrcJHtevDByGpaDJDHmeEFsslgoovaIbiuaixldpyuChx/first.png.scaled1000.png"><img alt="First" height="332" src="http://getfile6.posterous.com/getfile/files.posterous.com/temp-2011-02-01/AAylHapBAcuthqhvrcJHtevDByGpaDJDHmeEFsslgoovaIbiuaixldpyuChx/first.png.scaled500.png" width="500" /></a>
+</div>
+&nbsp;</p>
+<p>This page for the second node. There are two possible responses, either you say "I don't care" which takes you back to the "home" node while clicking on "you're welcome" takes you to the next node.&nbsp;</p>
+<p>&nbsp;</p>
+<p><div class='p_embed p_image_embed'>
+<a href="http://getfile4.posterous.com/getfile/files.posterous.com/temp-2011-02-01/uhmGHftAIfilfmddIoqtiwuCmDsuJfxeuCBnizEkxqegaEvsnDsasxDntoIJ/second.png.scaled1000.png"><img alt="Second" height="257" src="http://getfile5.posterous.com/getfile/files.posterous.com/temp-2011-02-01/uhmGHftAIfilfmddIoqtiwuCmDsuJfxeuCBnizEkxqegaEvsnDsasxDntoIJ/second.png.scaled500.png" width="500" /></a>
+</div>
+</p>
+<p>&nbsp;</p>
+<p>Let's skip the next node as it only has one response. Now the fourth node contains two responses each of which sends you to a different node.</p>
+<p><div class='p_embed p_image_embed'>
+<a href="http://getfile1.posterous.com/getfile/files.posterous.com/temp-2011-02-01/bvtosHramhiyAnCqgedjvyqhllJyHacliIsCJfsxqwbfkFlmsqoaCktontkw/four.png.scaled1000.png"><img alt="Four" height="236" src="http://getfile4.posterous.com/getfile/files.posterous.com/temp-2011-02-01/bvtosHramhiyAnCqgedjvyqhllJyHacliIsCJfsxqwbfkFlmsqoaCktontkw/four.png.scaled500.png" width="500" /></a>
+</div>
+</p>
+<p>If you click on "umm I don't know..." , you get to this page.</p>
+<p><div class='p_embed p_image_embed'>
+<a href="http://getfile5.posterous.com/getfile/files.posterous.com/temp-2011-02-01/BeDJECexctdmkbbgGIbnGddCzqwCfhADegCwFhxuGDriHFHvEBHHoCvCiAtA/fifth-one.png.scaled1000.png"><img alt="Fifth-one" height="290" src="http://getfile5.posterous.com/getfile/files.posterous.com/temp-2011-02-01/BeDJECexctdmkbbgGIbnGddCzqwCfhADegCwFhxuGDriHFHvEBHHoCvCiAtA/fifth-one.png.scaled500.png" width="500" /></a>
+</div>
+</p>
+<p>&nbsp;</p>
+<p>and if you click on "I guess it means good" link, you get to this page.&nbsp;</p>
+<p><div class='p_embed p_image_embed'>
+<a href="http://getfile3.posterous.com/getfile/files.posterous.com/temp-2011-02-01/ywtjgyDvAxDxazqhiDAFmIiohebnzrlziAbbfgqklcBDgnGopHuhglgjJGrI/fifth-two.png.scaled1000.png"><img alt="Fifth-two" height="295" src="http://getfile1.posterous.com/getfile/files.posterous.com/temp-2011-02-01/ywtjgyDvAxDxazqhiDAFmIiohebnzrlziAbbfgqklcBDgnGopHuhglgjJGrI/fifth-two.png.scaled500.png" width="500" /></a>
+</div>
+</p>
+<p>&nbsp;</p>
+<p>Since, none of the responses above do anything more clicking any of the two link above takes you to the page for the next node.&nbsp;</p>
+<p>&nbsp;</p>
+<p>Enjoy.</p>
+<p>&nbsp;</p>]]></content:encoded>
+	<excerpt:encoded><![CDATA[I was inspired by the way "The Little Schemer" was used to teach scheme, with question on the left and answers on the right. I wondered how hard it would be to build a web app that could teach you in such an interactive way. Not so hard as I later...]]></excerpt:encoded>	
+
+	<wp:post_date>Tue Feb 01 16:17:56 -0800 2011</wp:post_date>
+	<wp:post_date_gmt>Tue Feb 01 16:17:56 -0800 2011</wp:post_date_gmt>
+	<wp:comment_status>open</wp:comment_status>
+	<wp:ping_status>open</wp:ping_status>
+	<wp:post_id>41682610</wp:post_id>
+	<wp:post_name>a-fully-functional-web-based-cyclic-tree-trav</wp:post_name>
+	<wp:status>publish</wp:status>
+	<wp:post_parent>0</wp:post_parent>
+	<wp:menu_order>0</wp:menu_order>
+	<wp:post_type>post</wp:post_type>
+	<wp:post_password></wp:post_password>
+	<wp:is_sticky>0</wp:is_sticky>
+
+	
+		<wp:comment>
+			<wp:comment_id>6960187</wp:comment_id>
+			
+				<wp:comment_author><![CDATA[Alan Post]]></wp:comment_author>
+				<wp:comment_author_url><![CDATA[http://lodockikumazvati.org/]]></wp:comment_author_url>
+			
+			<wp:comment_date>Wed Feb 02 10:55:16 -0800 2011</wp:comment_date>
+			<wp:comment_date_gmt>Wed Feb 02 10:55:16 -0800 2011</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Are you planning on developing this further?  I need a framework like this for a project I'm currently working on.  I'd be happy to coordinate if you're in the same situation.]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+		</wp:comment>
+	
+		<wp:comment>
+			<wp:comment_id>6962478</wp:comment_id>
+			
+				<wp:comment_author><![CDATA[Himanshu]]></wp:comment_author>
+			
+			<wp:comment_date>Wed Feb 02 13:19:21 -0800 2011</wp:comment_date>
+			<wp:comment_date_gmt>Wed Feb 02 13:19:21 -0800 2011</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Dude this could be an excellent project! I really like the Little Schemer teaching methodology myself!!]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+		</wp:comment>
+	
+		<wp:comment>
+			<wp:comment_id>6963119</wp:comment_id>
+			
+				<wp:comment_author><![CDATA[alok thapa]]></wp:comment_author>
+			
+			<wp:comment_date>Wed Feb 02 13:36:38 -0800 2011</wp:comment_date>
+			<wp:comment_date_gmt>Wed Feb 02 13:36:38 -0800 2011</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[@alan Sure, I'm just doing this in my free time and maybe put up a more complete version on github soon. 
+
+@himanshuc sure, let's do something!]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+		</wp:comment>
+	
+		<wp:comment>
+			<wp:comment_id>6965594</wp:comment_id>
+			
+				<wp:comment_author><![CDATA[Alan Post]]></wp:comment_author>
+				<wp:comment_author_url><![CDATA[http://lodockikumazvati.org/]]></wp:comment_author_url>
+			
+			<wp:comment_date>Wed Feb 02 14:04:11 -0800 2011</wp:comment_date>
+			<wp:comment_date_gmt>Wed Feb 02 14:04:11 -0800 2011</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[@alok: github would be fantastic.  I would like to request we use the ISC license for this work, as it is compatible with other software I'm developing.
+
+I work on chicken scheme, but have a fairly good idea of how to separate implementation specific code from more general scheme code.  I think we'd be able to work from different scheme implementations.
+
+What do you think?]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+		</wp:comment>
+	
+		<wp:comment>
+			<wp:comment_id>6987839</wp:comment_id>
+			
+				<wp:comment_author><![CDATA[alok thapa]]></wp:comment_author>
+			
+			<wp:comment_date>Fri Feb 04 18:00:41 -0800 2011</wp:comment_date>
+			<wp:comment_date_gmt>Fri Feb 04 18:00:41 -0800 2011</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[@alan I've just uploaded it as a github project, you can find it here -&gt; github.com/alokthapa/teach]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+		</wp:comment>
+	
+</item>
